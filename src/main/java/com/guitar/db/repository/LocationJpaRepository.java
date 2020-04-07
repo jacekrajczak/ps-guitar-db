@@ -9,6 +9,10 @@ import java.util.List;
 @Repository
 public interface LocationJpaRepository extends JpaRepository<Location, Long> {
 
-public List<Location> getLocationsByStateContains(String stateName);
-
+    List<Location> findByStateLike(String stateName);
+    List<Location> findByStateStartingWith(String stateName);
+    List<Location> findByStateNotLike(String stateName);
+    List<Location> findByStateNot(String stateName);
+    List<Location> findByStateIsOrCountryEquals(String state, String country);
+    List<Location> findByStateAndCountry(String state, String country);
 }

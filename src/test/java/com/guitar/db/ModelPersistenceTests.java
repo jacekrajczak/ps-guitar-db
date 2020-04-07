@@ -9,6 +9,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.guitar.db.repository.ModelJpaRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class ModelPersistenceTests {
 	@Autowired
 	private ModelRepository modelRepository;
 
+	@Autowired
+	private ModelJpaRepository modelJpaRepository;
+
 	@PersistenceContext
 	private EntityManager entityManager;
 
@@ -37,23 +41,23 @@ public class ModelPersistenceTests {
 		m.setPrice(BigDecimal.valueOf(55L));
 		m.setWoodType("Maple");
 		m.setYearFirstMade(new Date());
-		m = modelRepository.create(m);
+		m = modelJpaRepository.saveAndFlush(m);
 		
 		// clear the persistence context so we don't return the previously cached location object
 		// this is a test only thing and normally doesn't need to be done in prod code
-		entityManager.clear();
+		// entityManager.clear();
 
-		Model otherModel = modelRepository.find(m.getId());
+		Model otherModel = modelJpaRepository.findById(m.getId()).get();
 		assertEquals("Test Model", otherModel.getName());
 		assertEquals(10, otherModel.getFrets());
 		
 		//delete BC location now
-		modelRepository.delete(otherModel);
+		modelJpaRepository.delete(otherModel);
 	}
 
 	@Test
 	public void testGetModelsInPriceRange() throws Exception {
-		List<Model> mods = modelRepository.getModelsInPriceRange(BigDecimal.valueOf(1000L), BigDecimal.valueOf(2000L));
+		List<Model> mods = modelJpaRepository.findByPriceIsGreaterThanEqualAndPriceIsLessThanEqual(BigDecimal.valueOf(1000L), BigDecimal.valueOf(2000L));
 		assertEquals(4, mods.size());
 	}
 

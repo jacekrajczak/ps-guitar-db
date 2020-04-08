@@ -16,12 +16,12 @@ import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
 
 @Entity
-/*@NamedNativeQuery(name = "Manufacturer.getAllThatSellAcoustics",
+@NamedNativeQuery(name = "Manufacturer.getAllThatSellAcoustics",
 		query = "SELECT m.id, m.name, m.foundedDate, m.averageYearlySales, m.location_id as headquarters_id, m.active "
 	    + "FROM Manufacturer m "
 		+ "LEFT JOIN Model mod ON (m.id = mod.manufacturer_id) "
 		+ "LEFT JOIN ModelType mt ON (mt.id = mod.modeltype_id) "
-	    + "WHERE (mt.name = ?)", resultClass = Manufacturer.class)*/
+	    + "WHERE (mt.name = ?)", resultClass = Manufacturer.class)
 public class Manufacturer {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

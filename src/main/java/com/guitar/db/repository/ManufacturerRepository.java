@@ -68,7 +68,7 @@ public class ManufacturerRepository {
 	/**
 	 * Native Query finder
 	 */
-	/*public List<Manufacturer> getManufacturersThatSellModelsOfType(String modelType) {
-		return manufacturerJpaRepository.findByModelsLike(modelType);
-	}*/
+	public List<Manufacturer> getManufacturersThatSellModelsOfType(String modelType) {
+		return manufacturerJpaRepository.getAllThatSellAcoustics(modelType);
+	}
 }

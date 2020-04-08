@@ -21,6 +21,9 @@ import com.guitar.db.repository.ManufacturerRepository;
 public class ManufacturerPersistenceTests {
 
 	@Autowired
+	private ManufacturerRepository manufacturerRepository;
+
+	@Autowired
 	private ManufacturerJpaRepository manufacturerJpaRepository;
 
 	@Test
@@ -45,9 +48,9 @@ public class ManufacturerPersistenceTests {
 		assertEquals("Gibson Guitar Corporation", m.getName());
 	}
 
-/*	@Test
+	@Test
 	public void testGetManufacturersThatSellModelsOfType() throws Exception {
-		List<Manufacturer> mans = manufacturerJpaRepository.findByModelsLike("Semi-Hollow Body Electric");
+		List<Manufacturer> mans = manufacturerRepository.getManufacturersThatSellModelsOfType("Semi-Hollow Body Electric");
 		assertEquals(1, mans.size());
-	}*/
+	}
 }

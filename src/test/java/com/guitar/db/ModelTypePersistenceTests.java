@@ -1,8 +1,5 @@
 package com.guitar.db;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -19,6 +16,8 @@ import com.guitar.db.model.ModelType;
 import com.guitar.db.repository.ModelTypeRepository;
 
 import java.util.List;
+
+import static org.junit.Assert.*;
 
 @ContextConfiguration(locations={"classpath:com/guitar/db/applicationTests-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -57,5 +56,13 @@ public class ModelTypePersistenceTests {
 	public void testFind() throws Exception {
 		ModelType mt = modelTypeJpaRepository.findById(1L).get();
 		assertEquals("Dreadnought Acoustic", mt.getName());
+	}
+
+	@Test
+	public void testFindNullNotNull() throws Exception {
+		ModelType mt = modelTypeJpaRepository.findByNameNull().get(0);
+		assertNull(null, mt.getName());
+		List<ModelType> modelTypeList = modelTypeJpaRepository.findByNameNotNull();
+		assertNotNull(modelTypeList);
 	}
 }

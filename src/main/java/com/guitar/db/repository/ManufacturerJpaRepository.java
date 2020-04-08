@@ -11,5 +11,8 @@ import java.util.List;
 public interface ManufacturerJpaRepository extends JpaRepository<Manufacturer, Long> {
 
     List<Manufacturer> findByFoundedDateBefore(Date foundedDate);
-
+    Manufacturer findByNameLike(String name);
+//    List<Manufacturer> findByModelsLike(String model);
+    Manufacturer findByActiveTrue();
+    Manufacturer findByActiveFalse();
 }

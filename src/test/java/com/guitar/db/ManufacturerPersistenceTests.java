@@ -1,6 +1,7 @@
 package com.guitar.db;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.Date;
 import java.util.List;
@@ -18,8 +19,6 @@ import com.guitar.db.repository.ManufacturerRepository;
 @ContextConfiguration(locations={"classpath:com/guitar/db/applicationTests-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ManufacturerPersistenceTests {
-	@Autowired
-	private ManufacturerRepository manufacturerRepository;
 
 	@Autowired
 	private ManufacturerJpaRepository manufacturerJpaRepository;
@@ -32,13 +31,23 @@ public class ManufacturerPersistenceTests {
 
 	@Test
 	public void testGetManufactureByName() throws Exception {
-		Manufacturer m = manufacturerRepository.getManufacturerByName("Fender");
+		Manufacturer m = manufacturerJpaRepository.findByNameLike("Fender%");
 		assertEquals("Fender Musical Instruments Corporation", m.getName());
 	}
 
 	@Test
-	public void testGetManufacturersThatSellModelsOfType() throws Exception {
-		List<Manufacturer> mans = manufacturerRepository.getManufacturersThatSellModelsOfType("Semi-Hollow Body Electric");
-		assertEquals(1, mans.size());
+	public void testFindByActiveTrue() throws Exception {
+		Manufacturer m = manufacturerJpaRepository.findByActiveTrue();
+		assertNotNull(m);
+		assertEquals("Fender Musical Instruments Corporation", m.getName());
+		m = manufacturerJpaRepository.findByActiveFalse();
+		assertNotNull(m);
+		assertEquals("Gibson Guitar Corporation", m.getName());
 	}
+
+/*	@Test
+	public void testGetManufacturersThatSellModelsOfType() throws Exception {
+		List<Manufacturer> mans = manufacturerJpaRepository.findByModelsLike("Semi-Hollow Body Electric");
+		assertEquals(1, mans.size());
+	}*/
 }

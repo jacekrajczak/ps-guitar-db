@@ -78,8 +78,14 @@ public class LocationPersistenceTests {
 
 	@Test
 	public void testFindStartingWith() throws Exception {
-		List<Location> locs = locationJpaRepository.findByStateStartingWith("New");
+		List<Location> locs = locationJpaRepository.findByStateIgnoreCaseStartingWith("new");
 		assertEquals(4, locs.size());
+	}
+
+	@Test
+	public void testFindFirstStartingWith() throws Exception {
+		Location loc = locationJpaRepository.findFirstByStateIgnoreCaseStartingWith("a");
+		assertEquals("Alabama", loc.getState());
 	}
 
 	@Test
@@ -90,8 +96,9 @@ public class LocationPersistenceTests {
 
 	@Test
 	public void testFindWithNotLike() throws Exception {
-		List<Location> locs = locationJpaRepository.findByStateNotLike("New%");
+		List<Location> locs = locationJpaRepository.findByStateNotLikeOrderByStateAsc("New%");
 		assertEquals(46, locs.size());
+		assertEquals("Alabama", locs.get(0).getState());
 	}
 
 	@Test

@@ -11,4 +11,5 @@ import java.util.List;
 public interface ModelJpaRepository extends JpaRepository<Model, Long> {
 
     List<Model> findByPriceIsGreaterThanEqualAndPriceIsLessThanEqual(BigDecimal value, BigDecimal value2);
+    List<Model> findByModelTypeNameIn(List<String> types);
 }
